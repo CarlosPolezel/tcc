@@ -25,4 +25,8 @@ curl http://127.0.0.1:3001/api/servicos
 
 A API é um protótipo local sem autenticação. Use dados fictícios para demonstrar o fluxo.
 
-[Documentação do backend](backend/README.md) · [Rotas e exemplos da API](backend/docs/api.md)
+## Testes da agenda
+
+Na pasta `backend`, execute `npm ci` e `npm test`. Os testes simulam as consultas e gravações de agendamentos, por isso rodam sem MongoDB. Eles cobrem horário livre, sobreposição, reservas adjacentes e o limite do expediente.
+
+[GitHub Actions](https://github.com/CarlosPolezel/tcc/actions/workflows/backend-tests.yml) · [Documentação do backend](backend/README.md) · [Rotas e exemplos da API](backend/docs/api.md)
