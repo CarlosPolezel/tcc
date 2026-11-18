@@ -6,6 +6,8 @@ API de um protótipo de TCC para divulgação e agendamento de serviços locais.
 - Consulta de horários considerando a duração do atendimento e as reservas existentes.
 - Registro e acompanhamento de agendamentos.
 
+[Documentação do projeto e roteiro para a banca](docs/projeto.md)
+
 ## Executar localmente
 
 Com Node.js 24 e o MongoDB local em execução, abra a pasta do repositório:
