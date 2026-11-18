@@ -104,3 +104,38 @@ test('aceita o fim às 18h e rejeita reservas que ultrapassam o expediente', asy
   await assert.rejects(reservar('17:30'), { status: 400 });
   assert.equal(gravar.mock.callCount(), 1);
 });
+
+
+test('processa pedidos simultâneos na ordem e rejeita apenas a sobreposição', async (t) => {
+  const reservas = [];
+  t.mock.method(Agendamento, 'exists', async (filtro) =>
+    reservas.some(r => r.inicio < filtro.inicio.$lt && r.fim > filtro.fim.$gt));
+  t.mock.method(Agendamento, 'create', async (dados) => {
+    reservas.push(dados);
+    return dados;
+  });
+
+  const [primeiro, conflito, seguinte] = await Promise.allSettled([
+    reservar('09:00'), reservar('09:30'), reservar('10:00'),
+  ]);
+  assert.equal(primeiro.status, 'fulfilled');
+  assert.equal(conflito.reason.status, 409);
+  assert.equal(seguinte.status, 'fulfilled');
+  assert.equal(reservas.length, 2);
+});
+
+test('permite concluir somente a partir do fim do atendimento', async (t) => {
+  const { atualizarStatus } = require('../src/controllers/agendamento.controller');
+  const fim = instante('10:00');
+  const req = { params: { id: servico._id }, body: { status: 'concluido' } };
+  const res = { json: (valor) => valor };
+  t.mock.method(Agendamento, 'exists', async () => true);
+  t.mock.method(Agendamento, 'findOneAndUpdate', async (filtro, update) => {
+    assert.deepEqual(filtro.status.$in, ['confirmado']);
+    return fim <= filtro.fim.$lte ? update.$set : null;
+  });
+
+  await assert.rejects(atualizarStatus(req, res), { status: 409 });
+  t.mock.timers.setTime(fim.getTime());
+  assert.deepEqual(await atualizarStatus(req, res), { status: 'concluido' });
+});
