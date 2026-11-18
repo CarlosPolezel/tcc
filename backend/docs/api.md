@@ -563,7 +563,7 @@ Erros:
 - 400: dados, ID, data ou horário inválidos.
 - 400: data passada ou atendimento fora do expediente.
 - 404: serviço inexistente ou inativo.
-- 409: conflito de horário ou reserva em processamento.
+- 409: conflito de horário.
 
 Um atendimento pode começar exatamente quando outro termina.
 
@@ -650,9 +650,7 @@ Repetir o status atual também retorna conflito.
 Não é possível reabrir um cancelado ou concluído.
 Para uma nova reserva, crie outro agendamento.
 
-A implementação permite concluir antes do horário do atendimento.
-Como concluídos não bloqueiam a agenda, não conclua antecipadamente
-durante testes em que o intervalo deva permanecer ocupado.
+A conclusão exige um atendimento confirmado cujo horário de término já chegou. Uma tentativa antecipada retorna 409.
 
 ## 11. Painel demonstrativo
 

@@ -11,7 +11,7 @@ const INTERVALO = 30;
 const DESLOCAMENTO_UTC = '-03:00';
 
 // Bloqueio local, limitado a uma instância do servidor.
-const reservasEmProcessamento = new Set();
+const filasPorPrestador = new Map();
 
 function montarInicio(data, horario) {
   return new Date(
@@ -148,13 +148,14 @@ async function criarReserva({
 
   const chave = String(servico.prestador);
 
-  if (reservasEmProcessamento.has(chave)) {
-    falhar(409, 'Agenda em atualizacao. Tente novamente.');
-  }
-
-  reservasEmProcessamento.add(chave);
-
+  const anterior = filasPorPrestador.get(chave);
+  const vez = Promise.withResolvers();
+  filasPorPrestador.set(chave, vez.promise);
   try {
+    await anterior;
+    if (inicio <= new Date()) {
+      falhar(400, 'Escolha uma data e um horario futuros.');
+    }
     const fim = montarFim(inicio, servico.duracao);
 
     const conflito = await Agendamento.exists({
@@ -190,7 +191,10 @@ async function criarReserva({
 
     return agendamento;
   } finally {
-    reservasEmProcessamento.delete(chave);
+    vez.resolve();
+    if (filasPorPrestador.get(chave) === vez.promise) {
+      filasPorPrestador.delete(chave);
+    }
   }
 }
 

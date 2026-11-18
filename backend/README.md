@@ -364,11 +364,7 @@ confirmado → cancelado
 
 Não é possível reabrir cancelados ou concluídos.
 
-A implementação não verifica se o horário já passou antes
-de permitir a conclusão.
-
-Evite concluir antecipadamente durante testes em que
-o atendimento ainda deva bloquear o horário.
+A conclusão só é permitida a partir do horário de término do atendimento.
 
 ## 15. Integração com o frontend
 
@@ -426,11 +422,7 @@ O contrato completo está em docs/api.md.
 - Testar filtros.
 - Reiniciar a API e verificar persistência.
 
-Não existe suíte automatizada ou script npm test
-definido nesta versão.
-
-A lista acima é um roteiro de verificação manual,
-não uma declaração de que todos os testes foram executados.
+Na pasta `backend`, execute `npm ci` e `npm test` com Node.js 24. Os testes usam modelos simulados. Use o roteiro acima para verificar a integração com o MongoDB.
 
 ## 17. Solução de problemas
 
@@ -584,7 +576,7 @@ Se o Git abrir um visualizador, pressione q para sair.
 - Expediente e deslocamento de horário fixos.
 - Sem validação completa de telefone.
 - Sem pagamentos.
-- Sem testes automatizados.
+- A fila por prestador coordena pedidos simultâneos no mesmo processo.
 
 A organização em camadas facilita a manutenção, mas não elimina
 essas limitações.

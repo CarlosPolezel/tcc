@@ -172,13 +172,13 @@ exports.atualizarStatus = async (req, res) => {
     falhar(400, 'Status invalido.');
   }
 
+  const filtro = { _id: req.params.id, status: { $in: transicoes[status] } };
+  if (status === 'concluido') {
+    filtro.fim = { $lte: new Date() };
+  }
+
   const atualizado = await Agendamento.findOneAndUpdate(
-    {
-      _id: req.params.id,
-      status: {
-        $in: transicoes[status],
-      },
-    },
+    filtro,
     {
       $set: { status },
     },
@@ -199,7 +199,9 @@ exports.atualizarStatus = async (req, res) => {
 
     falhar(
       409,
-      'Esta alteracao de status nao e permitida.'
+      status === 'concluido'
+        ? 'Somente atendimentos confirmados que ja terminaram podem ser concluidos.'
+        : 'Esta alteracao de status nao e permitida.'
     );
   }
 
