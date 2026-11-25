@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ServiçoJá · Agendamentos</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header><nav aria-label="Principal"><a class="brand" href="#">Serviço<span>Já</span></a><a href="#agenda">Agenda do prestador ↗</a></nav></header>
+  <main>
+    <section id="catalogo">
+      <h1>Encontre um serviço.</h1>
+      <label for="busca">Buscar serviço</label>
+      <input type="search" id="busca" placeholder="Ex.: corte de cabelo">
+      <div id="categorias" class="choices" aria-label="Categorias"></div>
+      <div id="cards" class="grid"></div>
+    </section>
+    <section id="reserva" hidden>
+      <a href="#">← Catálogo</a><h1>Escolha seu horário.</h1>
+      <div id="resumo" class="summary"></div>
+      <form id="pedido">
+        <label for="data">Data do atendimento</label><input type="date" id="data" required>
+        <div id="horarios"></div>
+        <fieldset id="cliente" hidden>
+          <legend>Dados da solicitação</legend>
+          <p id="intervalo"></p>
+          <label for="nome">Nome fictício</label><input id="nome" required maxlength="100">
+          <label for="telefone">Telefone fictício</label><input id="telefone" type="tel" required maxlength="30">
+          <button class="primary">Solicitar agendamento</button>
+        </fieldset>
+      </form>
+      <p id="aviso" role="status"></p>
+    </section>
+    <section id="agenda" hidden>
+      <a href="#">← Catálogo</a><h1>Agenda do prestador.</h1>
+      <label for="profissional">Profissional</label><select id="profissional"></select>
+      <div id="abas" class="choices"><button data-tab="hoje">Hoje</button><button data-tab="pendentes">Solicitações</button></div>
+      <div id="atendimentos" aria-live="polite"></div>
+    </section>
+  </main>
+  <footer>Demonstração local · Use apenas dados fictícios.</footer>
+</body>
+</html>

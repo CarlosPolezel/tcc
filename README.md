@@ -30,3 +30,9 @@ A API é um protótipo local sem autenticação. Use dados fictícios para demon
 Na pasta `backend`, execute `npm ci` e `npm test`. Os testes simulam as consultas e gravações de agendamentos, por isso rodam sem MongoDB. Eles cobrem horário livre, sobreposição, reservas adjacentes e o limite do expediente.
 
 [GitHub Actions](https://github.com/CarlosPolezel/tcc/actions/workflows/backend-tests.yml) · [Documentação do backend](backend/README.md) · [Rotas e exemplos da API](backend/docs/api.md)
+
+## Esboço navegável do frontend
+
+Na raiz do projeto, execute `python -m http.server 5500 --bind 127.0.0.1 --directory frontend` e abra [o catálogo local](http://127.0.0.1:5500/).
+O esboço usa serviços fictícios e guarda as solicitações no navegador, sem conexão com o backend.
+Para demonstrar, solicite um horário e abra **Agenda do prestador → Solicitações** no mesmo navegador e endereço. Selecione o profissional do serviço para confirmar ou cancelar o pedido. A aba **Hoje** exibe os atendimentos da data local.
