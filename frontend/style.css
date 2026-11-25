@@ -1,0 +1,29 @@
+:root {font: 100%/1.55 "Inter", system-ui, sans-serif; color: #173632; background: #f7f8f4; --teal: #086556; --line: #d4ded7}
+* {box-sizing: border-box}
+body {margin: 0}
+header {background: white; border-bottom: 1px solid var(--line)}
+nav, main, footer {max-width: 68rem; margin: auto; padding: 1.2rem clamp(1rem, 5vw, 3rem)}
+nav {display: flex; align-items: center; justify-content: space-between; gap: 1rem}
+a {color: var(--teal); text-underline-offset: .2em}
+.brand {text-decoration: none; color: #173632; font-weight: 850; font-size: 1.65rem; letter-spacing: -.08em}
+.brand span {color: var(--teal)}
+main {min-height: 75vh; padding-top: clamp(2rem, 7vw, 5rem)}
+h1 {font-size: clamp(2.15rem, 6vw, 4rem); letter-spacing: -.065em; line-height: 1.05; margin: .7rem 0 2rem}
+h2, h3 {line-height: 1.16; margin: .65rem 0}
+p {margin: .5rem 0 1rem}
+label, legend {display: block; font-weight: 650; margin: 1rem 0 .35rem}
+input, select, button {font: inherit; color: inherit; border: 1px solid #9cafaa; border-radius: .6rem; background: white; padding: .65rem .9rem}
+input, select {width: min(100%, 30rem); display: block}
+button {cursor: pointer}
+button:hover, .primary:hover {filter: brightness(.95)}
+:focus-visible {outline: 3px solid #a45210; outline-offset: 3px}
+.choices {display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.25rem 0 1.75rem}
+.choices button {border-radius: 2rem}
+button[aria-pressed="true"], .primary {background: var(--teal); color: white; border-color: var(--teal)}
+.grid {display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,16rem),1fr)); gap: 1rem}
+article, .summary, fieldset {background: white; border: 1px solid var(--line); border-radius: 1rem; padding: 1.3rem; margin: 0 0 1rem; min-width: 0}
+article {overflow-wrap: anywhere}
+article small {color: var(--teal); font-weight: 700}
+.primary {display: inline-block; text-decoration: none; padding: .65rem 1rem; border-radius: .6rem; margin-top: .6rem}
+#pedido, .summary, #atendimentos {max-width: 45rem}
+footer {color: #536561; font-size: .875rem}
